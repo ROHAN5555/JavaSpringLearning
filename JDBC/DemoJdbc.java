@@ -18,17 +18,28 @@ public class DemoJdbc {
         String uName = "postgres";
         String pass = "RISHIpgsql@123";
 
+        // variables declared below for preparedStatement concept
+        int sid = 101;
+        String sname = "Rajat";
+        int marks = 90;
+
         // queries below
-        
+
         //String sql = "select sname from student where sid = 1";
         //String sql = "select * from student";
         //String sql = "insert into student values (6,'John', 48)";
         //String sql = "update student set sname = 'Max' where sid =5";
-        String sql = "delete from student where sid=6";
+        //String sql = "delete from student where sid=6";
+
+        String sql = "insert into student values(?,?,?)"; // sql for preparedStatement concept
 
         Class.forName("org.postgresql.Driver"); //load and register drivers
         Connection con = DriverManager.getConnection(url,uName,pass); //create connection
-        Statement st = con.createStatement(); //create statement
+//        Statement st = con.createStatement(); //create statement
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1,sid);
+        pst.setString(2,sname);
+        pst.setInt(3,marks);
 
 //        Case-1
 
@@ -47,7 +58,7 @@ public class DemoJdbc {
 //        Case-2
 
         System.out.println("Congratulations Rohan ! Connection Established");
-        st.execute(sql); //it gives false as it executes not executeQuery as seen above gives true
+        pst.execute(); //it gives false as it executes not executeQuery as seen above gives true
 
 
 
